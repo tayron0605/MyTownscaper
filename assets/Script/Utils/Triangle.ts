@@ -1,6 +1,7 @@
 import { Edge } from "./Edge";
 import { Grid } from "./Grid";
 import { Quad } from "./Quad";
+import { Utils } from "./Utils";
 import { Vertex_hex } from "./Vertex";
 
 export class Triangle
@@ -45,6 +46,9 @@ export class Triangle
     {
         let inner = Vertex_hex.GrabRing(radius - 1, vertices);
         let outer = Vertex_hex.GrabRing(radius, vertices);
+        if(outer.length == 0 || inner.length == 0){
+            return;
+        }
         for(let i = 0;i < 6;++i){
             for(let j = 0;j < radius;++j){
                 //创建两个顶点在外圈，一个顶点在内圈的三角形
@@ -157,6 +161,9 @@ export class Triangle
         let b:Vertex_hex = this._vertices[(this._vertices.indexOf(a) + 1) % 3];
         let c:Vertex_hex = this.IsolatedVertex_Neighbor(neighbor);
         let d:Vertex_hex = neighbor._vertices[(neighbor._vertices.indexOf(c) + 1) % 3];
+        if(!a || !b ||!c ||!d){
+            return;
+        }
         let quad = new Quad(a, b, c, d, edges, quads);
         let removeEdge = this.NeighborEdge(neighbor);
         if(removeEdge){
@@ -173,5 +180,29 @@ export class Triangle
         if(idx != -1){
             triangles.splice(idx,1);
         }
+    }
+
+    public static HasNeighborTriangles(triangles:Array<Triangle>):boolean
+    {
+        for(let i = 0;i < triangles.length;++i){
+            let a = triangles[i];
+            for(let j = 0;j < triangles.length;++j){
+                let b = triangles[j];
+                if(a.isNeighbor(b))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    static RandomlyMergeTriangles(edges:Array<Edge>, triangles:Array<Triangle>, quads:Array<Quad>)
+    {
+        let randomIdx = Utils.RandomInt(0, triangles.length - 1);
+        let neighbors = triangles[randomIdx].FindAllNeighborTriangles(triangles);
+        if(neighbors.length > 0){
+            let randomNeighborIndex = Utils.RandomInt(0, neighbors.length - 1);
+            triangles[randomIdx].MergeNeighborTriangles(neighbors[randomNeighborIndex], edges, triangles, quads);
+        }
+
     }
 }

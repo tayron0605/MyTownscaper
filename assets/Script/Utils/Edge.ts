@@ -19,7 +19,16 @@ export class Edge
     }
 
     Contains(a:Vertex_hex){
-        return this._hexes.findIndex(v => v.ID == a.ID) != -1;
+        for(let i = 0;i < this._hexes.length;++i){
+            let v = this._hexes[i];
+            if(!v || !a){
+                let c = 0;
+            }
+            if(v.ID == a.ID){
+                return true;
+            }
+        }
+        return false;
     }
 
     static FindEdge(a:Vertex_hex, b:Vertex_hex, edges:Array<Edge>):Edge{

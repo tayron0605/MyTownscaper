@@ -1,4 +1,5 @@
 import { Edge } from "./Edge";
+import { Quad } from "./Quad";
 import { Triangle } from "./Triangle";
 import { Vertex_hex } from "./Vertex";
 
@@ -10,6 +11,7 @@ export class Grid
     public hexes:Array<Vertex_hex> = new Array<Vertex_hex>();
     public edges:Array<Edge> = new Array<Edge>();
     public triangles:Array<Triangle> = new Array<Triangle>();
+    public quads:Array<Quad> = new Array<Quad>();
     
     constructor(radius:number, cellSize:number)
     {
@@ -17,5 +19,8 @@ export class Grid
         Grid.cellSize = cellSize;
         Vertex_hex.Hex(this.hexes);
         Triangle.Triangles_Hex(this.hexes, this.edges, this.triangles);
+        // while(Triangle.HasNeighborTriangles(this.triangles)){
+        //     Triangle.RandomlyMergeTriangles(this.edges, this.triangles, this.quads);
+        // }
     }
 }

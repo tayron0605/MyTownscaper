@@ -34,10 +34,27 @@ export class UIMap extends Component {
         boxNode.position = pos;
     }
 
+    DrawTriangle(pos:number[]){
+        let uvs = [
+
+        ]
+        let mesh = MeshUtils.createMesh({positions:pos})
+        let triNode = new Node();
+        let model = triNode.addComponent(ModelComponent);
+        model.mesh = mesh;
+        this.rootNode.addChild(triNode);
+    }
+
     OnDrawGizmos() {
+        let pos = [];
         this.grid.hexes.forEach((vertex)=>{
             this.DrawBox(vertex.coord.world_position);
+            pos.push(vertex.coord.world_position.x);
+            pos.push(vertex.coord.world_position.y);
+            pos.push(vertex.coord.world_position.z);
         })
+        //this.DrawTriangle(pos);
+        let a = 0;
     }
 
     update(deltaTime: number) {

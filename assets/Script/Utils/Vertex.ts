@@ -128,15 +128,16 @@ export class Vertex_hex extends Vertex
     static Hex(vertices:Array<Vertex_hex>)
     {
         let tmp = Coord.Coord_Hex();
-        tmp.forEach((coord)=>{
+        for(let i = 0;i < tmp.length;++i){
+            let coord = tmp[i];
             vertices.push(new Vertex_hex(coord));
-        })
+        }
     }
 
     static GrabRing(radius:number, vertices:Array<Vertex_hex>)
     {
-        if(radius == 0) return vertices.splice(0, 1);
-
-        return vertices.splice(radius * (radius - 1) * 3 + 1, radius * 6);
+        if(radius == 0) return vertices.slice(0, 0 + 1);
+        let begin = radius * (radius - 1) * 3 + 1;
+        return vertices.slice(begin, begin + radius * 6);
     }
 }

@@ -21,9 +21,9 @@ export class Edge
     Contains(a:Vertex_hex){
         for(let i = 0;i < this._hexes.length;++i){
             let v = this._hexes[i];
-            if(!v || !a){
-                let c = 0;
-            }
+            // if(!v || !a){
+            //     let c = 0;
+            // }
             if(v.ID == a.ID){
                 return true;
             }

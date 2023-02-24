@@ -19,8 +19,8 @@ export class Grid
         Grid.cellSize = cellSize;
         Vertex_hex.Hex(this.hexes);
         Triangle.Triangles_Hex(this.hexes, this.edges, this.triangles);
-        //while(Triangle.HasNeighborTriangles(this.triangles)){
-        //    Triangle.RandomlyMergeTriangles(this.edges, this.triangles, this.quads);
-        //}
+        while(Triangle.HasNeighborTriangles(this.triangles)){
+           Triangle.RandomlyMergeTriangles(this.edges, this.triangles, this.quads);
+        }
     }
 }

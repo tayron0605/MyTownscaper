@@ -164,8 +164,8 @@ export class Triangle
         let b:Vertex_hex = this._vertices[(this._vertices.indexOf(a) + 1) % 3];
         let c:Vertex_hex = this.IsolatedVertex_Neighbor(neighbor);
         let d:Vertex_hex = neighbor._vertices[(neighbor._vertices.indexOf(c) + 1) % 3];
-        if(!a || !b ||!c ||!d){
-            return;
+        if(!a || !b || !c || !d){
+            console.log("MergeNeighborTriangles error.");
         }
         let quad = new Quad(a, b, c, d, edges, quads);
         let removeEdge = this.NeighborEdge(neighbor);

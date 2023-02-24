@@ -13,9 +13,13 @@ export class Quad
     _cd:Edge;
     _ad:Edge;
 
+    get vertices(){
+        return [this._a,this._b,this._c,this._d];
+    }
+
     constructor(a:Vertex_hex, b:Vertex_hex, c:Vertex_hex, d:Vertex_hex, edges:Array<Edge>, quads:Array<Quad>){
         this._a = a;
-        this._d = b;
+        this._b = b;
         this._c = c;
         this._d = d;
 

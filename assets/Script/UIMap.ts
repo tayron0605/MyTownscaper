@@ -52,22 +52,62 @@ export class UIMap extends Component {
         })
         
         let idx = 0;
-        let arrTri = this.grid.triangles;
+        // let arrTri = this.grid.triangles;
+        // this.schedule(()=>{
+        //     let pos = [];
+        //     let tri = arrTri[idx];
+        //     let vertices = tri.vertices;
+        //     vertices.forEach((v)=>{
+        //         pos.push(v.coord.world_position.x);
+        //         pos.push(v.coord.world_position.y);
+        //         pos.push(v.coord.world_position.z);
+        //     })
+        //     this.DrawTriangle(pos);
+        //     idx++;
+        //     if(idx >= this.grid.triangles.length){
+        //         this.unscheduleAllCallbacks();
+        //     }
+        // },0.2,macro.REPEAT_FOREVER);
+
+        let arrQuad = this.grid.quads;
         this.schedule(()=>{
             let pos = [];
-            let tri = arrTri[idx];
-            let vertices = tri.vertices;
-            vertices.forEach((v)=>{
-                pos.push(v.coord.world_position.x);
-                pos.push(v.coord.world_position.y);
-                pos.push(v.coord.world_position.z);
-            })
+            let quad = arrQuad[idx];
+            //绘制两个三角形abc和bcd
+            pos.push(quad._a.coord.world_position.x);
+            pos.push(quad._a.coord.world_position.y);
+            pos.push(quad._a.coord.world_position.z);
+            pos.push(quad._b.coord.world_position.x);
+            pos.push(quad._b.coord.world_position.y);
+            pos.push(quad._b.coord.world_position.z);
+            pos.push(quad._c.coord.world_position.x);
+            pos.push(quad._c.coord.world_position.y);
+            pos.push(quad._c.coord.world_position.z);
             this.DrawTriangle(pos);
+            ///////
+            // pos = [];
+            // pos.push(quad._b.coord.world_position.x);
+            // pos.push(quad._b.coord.world_position.y);
+            // pos.push(quad._b.coord.world_position.z);
+            // pos.push(quad._c.coord.world_position.x);
+            // pos.push(quad._c.coord.world_position.y);
+            // pos.push(quad._c.coord.world_position.z);
+            // pos.push(quad._d.coord.world_position.x);
+            // pos.push(quad._d.coord.world_position.y);
+            // pos.push(quad._d.coord.world_position.z);
+            // this.DrawTriangle(pos);
             idx++;
-            if(idx >= this.grid.triangles.length){
+            if(idx >= this.grid.quads.length){
                 this.unscheduleAllCallbacks();
             }
         },0.2,macro.REPEAT_FOREVER);
+
+        this.grid.quads.forEach((quad)=>{
+            if(!quad._a || !quad._b || !quad._c || !quad._d){
+                console.log("quad error.");
+            }
+        })
+
     }
 
     update(deltaTime: number) {

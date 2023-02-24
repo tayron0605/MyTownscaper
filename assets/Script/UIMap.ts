@@ -86,16 +86,16 @@ export class UIMap extends Component {
             this.DrawTriangle(pos);
             ///////
             // pos = [];
-            // pos.push(quad._b.coord.world_position.x);
-            // pos.push(quad._b.coord.world_position.y);
-            // pos.push(quad._b.coord.world_position.z);
-            // pos.push(quad._c.coord.world_position.x);
-            // pos.push(quad._c.coord.world_position.y);
-            // pos.push(quad._c.coord.world_position.z);
-            // pos.push(quad._d.coord.world_position.x);
-            // pos.push(quad._d.coord.world_position.y);
-            // pos.push(quad._d.coord.world_position.z);
-            // this.DrawTriangle(pos);
+            pos.push(quad._a.coord.world_position.x);
+            pos.push(quad._a.coord.world_position.y);
+            pos.push(quad._a.coord.world_position.z);
+            pos.push(quad._c.coord.world_position.x);
+            pos.push(quad._c.coord.world_position.y);
+            pos.push(quad._c.coord.world_position.z);
+            pos.push(quad._d.coord.world_position.x);
+            pos.push(quad._d.coord.world_position.y);
+            pos.push(quad._d.coord.world_position.z);
+            this.DrawTriangle(pos);
             idx++;
             if(idx >= this.grid.quads.length){
                 this.unscheduleAllCallbacks();

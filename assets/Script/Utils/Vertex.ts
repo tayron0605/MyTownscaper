@@ -136,7 +136,9 @@ export class Vertex_hex extends Vertex
 
     static GrabRing(radius:number, vertices:Array<Vertex_hex>)
     {
-        if(radius == 0) return vertices.slice(0, 0 + 1);
+        if(radius == 0)
+            return vertices.slice(0, 0 + 1);
+        
         let begin = radius * (radius - 1) * 3 + 1;
         return vertices.slice(begin, begin + radius * 6);
     }

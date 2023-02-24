@@ -41,20 +41,23 @@ export class Triangle
 
         triangles.push(this);
     }
+
+    get vertices()
+    {
+        return this._vertices;
+    }
     
     static Triangles_Ring(radius:number, vertices:Array<Vertex_hex>, edges:Array<Edge>, triangles:Array<Triangle>)
     {
         let inner = Vertex_hex.GrabRing(radius - 1, vertices);
         let outer = Vertex_hex.GrabRing(radius, vertices);
-        if(outer.length == 0 || inner.length == 0){
-            return;
-        }
-        for(let i = 0;i < 6;++i){
-            for(let j = 0;j < radius;++j){
+        
+        for(let i = 0;i < 6;i++){
+            for(let j = 0;j < radius;j++){
                 //创建两个顶点在外圈，一个顶点在内圈的三角形
                 let a:Vertex_hex = outer[i * radius + j];
                 let b:Vertex_hex = outer[(i * radius + j + 1) % outer.length];
-                let c:Vertex_hex = outer[(i * (radius - 1) + j) % inner.length];
+                let c:Vertex_hex = inner[(i * (radius - 1) + j) % inner.length];
                 new Triangle(a, b, c, edges, triangles);
                 //创建一个顶点在外圈，两个顶点在内圈的三角形
                 if(j > 0)

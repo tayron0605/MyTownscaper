@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, primitives, ModelComponent, Vec3 } from 'cc';
+import { _decorator, Component, Node, primitives, ModelComponent, Vec3, macro } from 'cc';
 import { utils } from "cc"; 
 import { Grid } from './Utils/Grid';
 const { MeshUtils } = utils;
@@ -46,15 +46,28 @@ export class UIMap extends Component {
     }
 
     OnDrawGizmos() {
-        let pos = [];
+        
         this.grid.hexes.forEach((vertex)=>{
             this.DrawBox(vertex.coord.world_position);
-            pos.push(vertex.coord.world_position.x);
-            pos.push(vertex.coord.world_position.y);
-            pos.push(vertex.coord.world_position.z);
         })
-        //this.DrawTriangle(pos);
-        let a = 0;
+        
+        let idx = 0;
+        let arrTri = this.grid.triangles;
+        this.schedule(()=>{
+            let pos = [];
+            let tri = arrTri[idx];
+            let vertices = tri.vertices;
+            vertices.forEach((v)=>{
+                pos.push(v.coord.world_position.x);
+                pos.push(v.coord.world_position.y);
+                pos.push(v.coord.world_position.z);
+            })
+            this.DrawTriangle(pos);
+            idx++;
+            if(idx >= this.grid.triangles.length){
+                this.unscheduleAllCallbacks();
+            }
+        },0.2,macro.REPEAT_FOREVER);
     }
 
     update(deltaTime: number) {
